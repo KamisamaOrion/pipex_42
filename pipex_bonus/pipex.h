@@ -6,7 +6,7 @@
 /*   By: mhervoch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 19:23:52 by mhervoch          #+#    #+#             */
-/*   Updated: 2024/02/12 20:55:14 by mhervoch         ###   ########.fr       */
+/*   Updated: 2024/02/17 00:02:10 by mhervoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct	s_pipex
 	pid_t	*pid;
 	int		fd_in;
 	int		fd_out;
+	int		argc;
 }	t_pipex;
 
 char	*get_path(char *cmd, char **env);

@@ -6,7 +6,7 @@
 /*   By: mhervoch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 19:23:31 by mhervoch          #+#    #+#             */
-/*   Updated: 2024/02/14 23:39:48 by mhervoch         ###   ########.fr       */
+/*   Updated: 2024/02/17 00:05:41 by mhervoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,7 @@ int	child_process(char **env, char *av, t_pipex *pipex, int i)
 {
 	char	**commande;
 
-(void)commande;
-(void)env;
-		commande = ft_split(av, ' ');
+	commande = ft_split(av, ' ');
 	if (pipe(pipex->pipe_fd) == -1)
 		return (1);
 	pipex->pid[i - 2] = fork();
@@ -52,9 +50,11 @@ int	child_process(char **env, char *av, t_pipex *pipex, int i)
 		return (1);
 	if (pipex->pid[i - 2] == 0)
 	{
-		printf("caca");
 		dup2(pipex->fd_in, STDIN_FILENO);
-		dup2(pipex->pipe_fd[1], STDOUT_FILENO);
+		if (i == pipex->argc)
+			dup2(pipex->fd_out, STDOUT_FILENO);
+		else
+			dup2(pipex->pipe_fd[1], STDOUT_FILENO);
 		close(pipex->pipe_fd[0]);
 		close(pipex->pipe_fd[1]);
 		close(pipex->fd_in);
@@ -62,11 +62,9 @@ int	child_process(char **env, char *av, t_pipex *pipex, int i)
 	}
 	else
 	{
-		printf("pipi");
 		close(pipex->pipe_fd[1]);
 		close(pipex->fd_in);
-		dup(pipex->pipe_fd[0]);
-		pipex->fd_in = pipex->pipe_fd[0];
+		pipex->fd_in = dup(pipex->pipe_fd[0]);
 		close(pipex->pipe_fd[0]);
 	}
 	return (1);
@@ -90,18 +88,19 @@ int	main(int ac, char **av, char **env)
 	}
 	else
 	{
+		pipex.argc = ac - 2;
 		pipex.fd_in = open(av[1] , O_RDONLY, 0777);
 		pipex.fd_out = open(av[ac - 1], O_WRONLY | O_CREAT | O_TRUNC, 0777);
 		i = 2;
 	}
 	pipex.pid = malloc(sizeof(pid_t) * ac - 2 - i + 1);
-	while (i < ac - 2)
+	while (i < ac - 1)
 	{
 		child_process(env, av[i], &pipex, i);
 		i++;
 	}
 	i = 2;
-	while (i < ac - 2)
+	while (i < ac - 1)
 	{
 		//waitpid(pipex.pid[i - 2], NULL, 0);
 		i++;
