@@ -6,7 +6,7 @@
 /*   By: mhervoch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 19:23:31 by mhervoch          #+#    #+#             */
-/*   Updated: 2024/02/17 00:05:41 by mhervoch         ###   ########.fr       */
+/*   Updated: 2024/02/17 23:08:32 by mhervoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,6 @@ int	ft_strlen(char const *s)
 	while (s[i])
 		i++;
 	return (i);
-}
-
-int	father_process(char **env, char **av, int *pipe_fd)
-{
-	int		fd;
-	char	**commande;
-
-	fd = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
-	commande = ft_split(av[3], ' ');
-	dup2(pipe_fd[0], STDIN_FILENO);
-	dup2(fd, STDOUT_FILENO);
-	close(pipe_fd[1]);
-	close(pipe_fd[0]);
-	exec(commande, env);
-	return (1);
 }
 
 int	child_process(char **env, char *av, t_pipex *pipex, int i)
@@ -58,7 +43,10 @@ int	child_process(char **env, char *av, t_pipex *pipex, int i)
 		close(pipex->pipe_fd[0]);
 		close(pipex->pipe_fd[1]);
 		close(pipex->fd_in);
-		exec(commande, env);
+		if (pipex->fd_in != -1)
+			exec(commande, env);\
+		else
+
 	}
 	else
 	{
