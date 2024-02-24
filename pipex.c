@@ -6,7 +6,7 @@
 /*   By: mhervoch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 19:23:31 by mhervoch          #+#    #+#             */
-/*   Updated: 2024/02/12 20:49:50 by mhervoch         ###   ########.fr       */
+/*   Updated: 2024/02/24 18:30:18 by mhervoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	main(int ac, char **av, char **env)
 	i = 0;
 	if (ac < 4)
 	{
-		printf("pas bon\n");
+		printf("Argument error\n");
 		return (0);
 	}
 	while (i < iter)

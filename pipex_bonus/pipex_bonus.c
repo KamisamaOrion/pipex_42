@@ -6,12 +6,11 @@
 /*   By: mhervoch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 19:23:31 by mhervoch          #+#    #+#             */
-/*   Updated: 2024/02/17 23:08:32 by mhervoch         ###   ########.fr       */
+/*   Updated: 2024/02/24 19:45:29 by mhervoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
-#include <fcntl.h>
+#include "pipex_bonus.h"
 
 int	ft_strlen(char const *s)
 {
@@ -44,9 +43,7 @@ int	child_process(char **env, char *av, t_pipex *pipex, int i)
 		close(pipex->pipe_fd[1]);
 		close(pipex->fd_in);
 		if (pipex->fd_in != -1)
-			exec(commande, env);\
-		else
-
+			exec(commande, env);
 	}
 	else
 	{
@@ -57,6 +54,8 @@ int	child_process(char **env, char *av, t_pipex *pipex, int i)
 	}
 	return (1);
 }
+
+//int	do_here_doc(char *limiter)
 
 int	main(int ac, char **av, char **env)
 {
@@ -73,6 +72,7 @@ int	main(int ac, char **av, char **env)
 	{
 		i = 3;
 		pipex.fd_out = open(av[ac - 1], O_WRONLY | O_CREAT | O_APPEND, 0777);
+		//do_here_doc(av[2], 
 	}
 	else
 	{
@@ -90,7 +90,7 @@ int	main(int ac, char **av, char **env)
 	i = 2;
 	while (i < ac - 1)
 	{
-		//waitpid(pipex.pid[i - 2], NULL, 0);
+		waitpid(pipex.pid[i - 2], NULL, 0);
 		i++;
 	}
 }
