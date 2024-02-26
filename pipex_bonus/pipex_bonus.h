@@ -6,7 +6,7 @@
 /*   By: mhervoch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 19:23:52 by mhervoch          #+#    #+#             */
-/*   Updated: 2024/02/17 00:02:10 by mhervoch         ###   ########.fr       */
+/*   Updated: 2024/02/26 20:08:27 by mhervoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,6 @@ void	*ft_memcpy(void *dest, const void *src, size_t n);
 int		ft_strlen(char const*s);
 size_t	ft_strlcpy(char *dest, const char *src, size_t size);
 int		exec(char **cmd, char **env);
+int		ft_printf(const char *f, ...);
 
 #endif

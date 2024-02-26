@@ -6,7 +6,7 @@
 /*   By: mhervoch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 19:23:31 by mhervoch          #+#    #+#             */
-/*   Updated: 2024/02/24 19:45:29 by mhervoch         ###   ########.fr       */
+/*   Updated: 2024/02/26 23:18:22 by mhervoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ int	child_process(char **env, char *av, t_pipex *pipex, int i)
 	return (1);
 }
 
-//int	do_here_doc(char *limiter)
-
 int	main(int ac, char **av, char **env)
 {
 	int	i;
@@ -68,19 +66,10 @@ int	main(int ac, char **av, char **env)
 		printf("pas bon\n");
 		return (0);
 	}
-	if (!strncmp(av[1], "here_doc", 8))
-	{
-		i = 3;
-		pipex.fd_out = open(av[ac - 1], O_WRONLY | O_CREAT | O_APPEND, 0777);
-		//do_here_doc(av[2], 
-	}
-	else
-	{
-		pipex.argc = ac - 2;
-		pipex.fd_in = open(av[1] , O_RDONLY, 0777);
-		pipex.fd_out = open(av[ac - 1], O_WRONLY | O_CREAT | O_TRUNC, 0777);
-		i = 2;
-	}
+	pipex.argc = ac - 2;
+	pipex.fd_in = open(av[1] , O_RDONLY, 0777);
+	pipex.fd_out = open(av[ac - 1], O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	i = 2;
 	pipex.pid = malloc(sizeof(pid_t) * ac - 2 - i + 1);
 	while (i < ac - 1)
 	{
@@ -125,7 +114,10 @@ char	*get_path(char *av, char **env)
 	while (dec_path[i] && access(ft_strjoin(dec_path[i], commande), X_OK) == -1)
 		i++;
 	if (!dec_path[i])
+	{
+		ft_printf("Command not found: %s\n", av);
 		return (NULL);
+	}
 	new_path = malloc(sizeof(char) * \
 			ft_strlen(ft_strjoin(dec_path[i], commande)));
 	new_path = ft_strjoin(dec_path[i], commande);

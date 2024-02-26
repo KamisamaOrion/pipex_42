@@ -6,11 +6,11 @@
 /*   By: mhervoch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 15:57:47 by mhervoch          #+#    #+#             */
-/*   Updated: 2024/01/23 20:08:11 by mhervoch         ###   ########.fr       */
+/*   Updated: 2024/02/26 20:01:46 by mhervoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
