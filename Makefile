@@ -6,23 +6,24 @@
 #    By: mhervoch <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/02 13:55:03 by mhervoch          #+#    #+#              #
-#    Updated: 2024/02/03 20:50:06 by mhervoch         ###   ########.fr        #
+#    Updated: 2024/02/12 21:12:52 by mhervoch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = pipex
+NAME = pipex_bonus
 
 CC = clang
 
 CFLAGS = -Wall -Wextra -Werror -g
 
-SRCS =	./ft_memcpy.c \
-		./ft_memmove.c \
-		./ft_split.c \
-		./ft_strjoin.c \
-		./ft_strlcpy.c \
-		./pipex.c \
-		./pipex_utils.c \
+SRCS =	./utils_bonus/ft_memcpy.c \
+		./utils_bonus/ft_memmove.c \
+		./utils_bonus/ft_split.c \
+		./utils_bonus/ft_strjoin.c \
+		./utils_bonus/ft_strlcpy.c \
+		./utils_bonus/ft_free_tab.c \
+		./pipex_bonus.c \
+		./utils_bonus/pipex_bonus_utils.c \
 
 HEAD =	pipex.h
 

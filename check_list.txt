@@ -1,0 +1,4 @@
+- leak
+- norme
+- check droit de fichier (retest fichier inexistant)
+- gerer commande incorrecte
