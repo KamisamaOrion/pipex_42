@@ -6,11 +6,11 @@
 /*   By: mhervoch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 10:42:56 by mhervoch          #+#    #+#             */
-/*   Updated: 2024/02/26 20:01:44 by mhervoch         ###   ########.fr       */
+/*   Updated: 2024/03/31 22:26:58 by mhervoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "pipex.h"
 
 static int	ft_countwords(char *s, char c)
 {

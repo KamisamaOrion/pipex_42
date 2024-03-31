@@ -6,11 +6,11 @@
 /*   By: mhervoch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 00:35:46 by mhervoch          #+#    #+#             */
-/*   Updated: 2024/02/26 20:01:56 by mhervoch         ###   ########.fr       */
+/*   Updated: 2024/03/31 22:27:08 by mhervoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "pipex.h"
 
 size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 {

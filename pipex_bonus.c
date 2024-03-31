@@ -6,11 +6,11 @@
 /*   By: mhervoch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 19:23:31 by mhervoch          #+#    #+#             */
-/*   Updated: 2024/03/12 23:34:43 by mhervoch         ###   ########.fr       */
+/*   Updated: 2024/03/31 23:15:37 by mhervoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "pipex.h"
 
 int	ft_strlen(char const *s)
 {
@@ -27,6 +27,12 @@ int	child_process(char **env, char *av, t_pipex *pipex, int i)
 	char	**commande;
 
 	commande = ft_split(av, ' ');
+	pipex->path = get_path(commande[0], env);
+	if (!pipex->path)
+	{
+		printf("Command not found: %s\n", av);
+		return (0);
+	}
 	if (pipe(pipex->pipe_fd) == -1)
 		return (1);
 	pipex->pid[i - 2] = fork();
@@ -45,8 +51,9 @@ int	child_process(char **env, char *av, t_pipex *pipex, int i)
 		{
 			if (pipex->fd_in > 2)
 				close(pipex->fd_in);
-			exec(commande, env);
+			exec(commande, env, pipex);
 		}
+		ft_free_tab((void **) commande);
 		exit(127);
 	}
 	else
@@ -66,29 +73,28 @@ int	main(int ac, char **av, char **env)
 	int		i;
 	t_pipex	pipex;
 
-	i = 0;
-	if (ac < 4)
+	if (ac <= 4)
 	{
 		printf("Error syntax\n");
 		return (0);
 	}
 	pipex.argc = ac - 2;
 	pipex.fd_in = open(av[1], O_RDONLY, 0777);
+	if (pipex.fd_in == 2)
+	{
+		printf("%s: no such file or directory", av[1]);
+		return (0);
+	}
 	pipex.fd_out = open(av[ac - 1], O_WRONLY | O_CREAT | O_TRUNC, 0777);
-	i = 2;
-	pipex.pid = malloc(sizeof(pid_t) * ac - 2 - i + 1);
-	while (i < ac - 1)
+	i = 1;
+	while (++i < ac - 1)
 	{
-		child_process(env, av[i], &pipex, i);
-		i++;
+		if (!child_process(env, av[i], &pipex, i))
+			return (0);
 	}
-	i = 2;
-	while (i < ac - 1)
-	{
+	i = 1;
+	while (++i < ac - 1)
 		waitpid(pipex.pid[i - 2], NULL, 0);
-		i++;
-	}
-	free(pipex.pid);
 }
 
 char	*grep(char **env)
@@ -126,33 +132,38 @@ char	*get_path(char *av, char **env)
 {
 	char	**dec_path;
 	char	*path;
-	char	*new_path;
+	char	*tmp;
 	int		i;
 	char	*commande;
 
-	if (!access(av, X_OK))
-		return (ft_strdup(av));
-	path = grep(env);
-	dec_path = ft_split(av, ' ');
-	if (!dec_path)
+	/*if (!access(av, X_OK))
 	{
-		free(path);
+		printf("Command not found\n");
 		return (NULL);
-	}
-	commande = ft_strjoin("/", dec_path[0]);
+	}*/
+	path = grep(env);
+	commande = ft_strjoin("/", av);
 	i = 0;
 	dec_path = ft_split(path, ':');
 	free(path);
-	while (dec_path[i] && access(ft_strjoin(dec_path[i], commande), X_OK) == -1)
+	while (dec_path[i])
+	{
+		tmp = ft_strjoin(dec_path[i], commande);
+		if (access(tmp, X_OK) != -1)
+			break ;
 		i++;
+		free(tmp);
+	}
 	if (!dec_path[i])
 	{
-		printf("Command not found: %s\n", av);
-		return (ft_strdup(""));
+		free(commande);
+		ft_free_tab((void **)dec_path);
+		return (NULL);
 	}
-	new_path = malloc(sizeof(char) * \
+	path = malloc(sizeof(char) * \
 			ft_strlen(ft_strjoin(dec_path[i], commande)));
-	new_path = ft_strjoin(dec_path[i], commande);
+	path = ft_strjoin(dec_path[i], commande);
 	ft_free_tab((void **) dec_path);
-	return (new_path);
+	free(commande);
+	return (path);
 }
