@@ -6,7 +6,7 @@
 #    By: mhervoch <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/02 13:55:03 by mhervoch          #+#    #+#              #
-#    Updated: 2024/02/12 21:12:52 by mhervoch         ###   ########.fr        #
+#    Updated: 2024/04/01 21:20:31 by mhervoch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ CC = clang
 CFLAGS = -Wall -Wextra -Werror -g
 
 SRCS =	./utils_bonus/ft_memcpy.c \
+		./utils_bonus/path.c \
 		./utils_bonus/ft_memmove.c \
 		./utils_bonus/ft_split.c \
 		./utils_bonus/ft_strjoin.c \

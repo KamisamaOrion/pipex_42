@@ -6,7 +6,7 @@
 /*   By: mhervoch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 19:23:52 by mhervoch          #+#    #+#             */
-/*   Updated: 2024/03/31 23:05:42 by mhervoch         ###   ########.fr       */
+/*   Updated: 2024/04/01 22:23:16 by mhervoch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef struct s_pipex
 {
 	int		pipe_fd[2];
 	pid_t	pid[1024];
+	int		false_pid[1024];
 	int		fd_in;
 	int		fd_out;
 	int		argc;
@@ -42,5 +43,7 @@ int		exec(char **cmd, char **env, t_pipex *pipex);
 int		ft_printf(const char *f, ...);
 void	ft_free_tab(void **tab);
 char	*ft_strdup(char *str);
+void	free_all(char **cmd, char *path);
+void	free_double(char **cmd, char **path);
 
 #endif
